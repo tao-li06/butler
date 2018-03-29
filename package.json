@@ -1,5 +1,5 @@
 {
-  "name": "smart-home",
+  "name": "butler",
   "version": "1.0.0",
   "description": "Control smart devices through google home",
   "main": "app/index.js",
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/tao-li06/smart-home.git"
+    "url": "git+ssh://git@github.com/tao-li06/butler.git"
   },
   "keywords": [
     "miio",
@@ -20,9 +20,9 @@
   "author": "Tao Li",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tao-li06/smart-home/issues"
+    "url": "https://github.com/tao-li06/butler/issues"
   },
-  "homepage": "https://github.com/tao-li06/smart-home#readme",
+  "homepage": "https://github.com/tao-li06/butler#readme",
   "dependencies": {
     "express": "^4.16.3",
     "miio": "^0.15.6",
