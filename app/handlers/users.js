@@ -42,7 +42,7 @@ export const token = async (req, res) => {
                 AuthToken.forge({ user_id: user.get('id')})
                     .fetch()
                     .then((existing_auth_token) => {
-                        let auth_token = existing_auth_token;
+                        let auth_token = !!existing_auth_token && existing_auth_token.get('auth_token');
                         if (!auth_token) {
                             auth_token = randomToken(16)
                             const expiration = new Date()
