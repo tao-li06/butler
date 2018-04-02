@@ -1,14 +1,6 @@
-const db = {
-    client: 'mysql',
-    connection: {
-        host     : '127.0.0.1',
-        user     : 'site',
-        password : 'litao',
-        database : 'butler',
-        charset  : 'utf8'
-    }
-}
+import yaml from 'js-yaml'
+import fs from 'fs'
 
-export default {
-    db,
-}
+const config = yaml.safeLoad(fs.readFileSync(__dirname + '/../../config.yml', 'utf8'))
+
+export default config

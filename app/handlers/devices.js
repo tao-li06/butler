@@ -77,6 +77,7 @@ export const command = async (req, res) => {
       address: deviceInfo.get('ip'),
       token: deviceInfo.get('token')
     })
+    res.json({ error: false, data: {message: 'Command executed'}})
   } catch(e) {
     res.status(500).json({error: true, data: {message: "Can't run command on device, error : " + e}})
   }
