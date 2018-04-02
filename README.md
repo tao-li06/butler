@@ -23,21 +23,28 @@ npm run init
 ```
 
 ## API
+NOTE: all the calls excpet `/api/login` requires auth token.
 ### Users API
 #### Get auth token
+Get the auth token, and set the token in request header for other api calls.
 ```
-POST /api/login 
+POST /api/login    -d { user: $user, password: $pasword}
+
+{
+    token: $token
+}
 ```
 
 #### Create user
 ```
-PUT /api/users
+PUT /api/users     -d { user: $user, password: $password }
 ```
 
 ### Devices API
 #### Register device
+Register a device, you have to provide a token if that devices requires one.
 ```
-PUT /api/devices/:name
+PUT /api/devices/:name     -d { type: $type, ip: $ip, token: $token}
 ```
 
 #### Get Device
@@ -47,15 +54,16 @@ GET /api/devices/:name
 
 #### Update device
 ```
-POST /api/devices/:name
+POST /api/devices/:name        -d { type: $type, ip: $ip, token: $token}
 ```
+
 
 #### Run command on device
 ```
 GET /api/devices/:name/:command
 ```
 
-####
+#### List all devices
 ```
 GET /api/devices
 ```
