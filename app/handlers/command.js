@@ -10,6 +10,7 @@ const command = async (req, res) => {
         return
     }
     const command = config.commands[commandParam]
+    console.log(config)
     const device = await miio.device(config)
     const result = await device[command]()
     res.send('ok');

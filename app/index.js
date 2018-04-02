@@ -1,28 +1,26 @@
+import handle from './handlers'
 import command from './handlers/command'
 
 const express = require('express')
 const next = require('next')
-
+var bodyParser = require('body-parser')
 const dev = process.env.NODE_ENV !== 'production'
 const app = next({ dev })
-const handle = app.getRequestHandler()
+const handleNext = app.getRequestHandler()
 
 app.prepare().then(() => {
   const server = express()
+  server.use(bodyParser.urlencoded({extended: true}));
+  server.use(bodyParser.json()); 
 
-  server.get('/r/:subreddit', (req, res) => {
-    return app.render(req, res, '/b', {
-      ...req.query,
-      subreddit: req.params.subreddit
-    })
-  })
+  handle(server)
 
   server.get('/api/:device/:command', (req, res) => {
     command(req, res)
   })
-
+  
   server.get('*', (req, res) => {
-    handle(req, res)
+    handleNext(req, res)
   })
   server.listen(3000)
 })

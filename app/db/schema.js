@@ -9,6 +9,9 @@ const schema = {
             type: 'string', 
             maxlength: 150, 
             nullable: false
+        },
+        password: {
+            type: 'string',
         }
     },
     devices: {
@@ -16,6 +19,10 @@ const schema = {
             type: 'increments', 
             nullable: false, 
             primary: true
+        },
+        name: {
+            type: 'string',
+            unique: true
         },
         type: {
             type: 'string',
