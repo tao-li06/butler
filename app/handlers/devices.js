@@ -1,5 +1,5 @@
 import { Device, Devices } from '../db/models'
-import { getDevice } from '../devices'
+import { getDevice, runCommand } from '../devices'
 
 
 export const save = async (req, res) => {
@@ -65,5 +65,20 @@ export const update = async (req, res) => {
     .catch((err)  => res.status(500).json({error: true, data: {message: err.message}}))
   })
   .catch((err) => res.status(500).json({error: true, data: {message: err.message}}))
+}
+
+export const command = async (req, res) => {
+  try {
+    const name = req.params.name
+    const command = req.params.command
+    const d = await Device.forge({ name })
+    const deviceInfo = await d.fetch({ require: true })
+    const result = await runCommand(deviceInfo.get('type'), command, {
+      address: deviceInfo.get('ip'),
+      token: deviceInfo.get('token')
+    })
+  } catch(e) {
+    res.status(500).json({error: true, data: {message: "Can't run command on device, error : " + e}})
+  }
 }
 

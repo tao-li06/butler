@@ -13,3 +13,10 @@ export const getDevice =  async (type, config) => {
     }
     return await map[type].getDevice(config)
 }
+
+export const runCommand = async (type, command, config) => {
+    if (!map[type]) {
+        return null
+    }
+    return await map[type].runCommand(command, config)
+}

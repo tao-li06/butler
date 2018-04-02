@@ -1,0 +1,6 @@
+export const COMMAND_LOCATE_DEVICE = 'locate-device'
+export const COMMAND_START = 'start'
+export const COMMAND_PAUSE = 'pause'
+export const COMMAND_STOP = 'deactivateCleaning'
+export const COMMAND_CHARGE = 'charge'
+export const COMMAND_RESUME = 'resume'
