@@ -1,5 +1,6 @@
 import bookshelf from 'bookshelf'
 import knex from './db'
+import crypto from 'crypto'
 
 const Bookshelf = bookshelf(knex)
 
@@ -27,3 +28,5 @@ export const Devices = Bookshelf.Collection.extend({
 export const AuthTokens = Bookshelf.Collection.extend({
     model: AuthToken
 })
+
+export const md5Passowrd = (password) => crypto.createHash('md5').update(password).digest('hex')

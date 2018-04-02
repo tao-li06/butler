@@ -8,10 +8,14 @@ const schema = {
         name: {
             type: 'string', 
             maxlength: 150, 
-            nullable: false
+            nullable: false,
+            unique: true
         },
         password: {
             type: 'string',
+        },
+        is_admin: {
+            type: 'bool'
         }
     },
     devices: {
@@ -54,7 +58,9 @@ const schema = {
         expire_at: {
             type: 'dateTime', 
             nullable: false
-        }
+        },
+        created_at: {type: 'dateTime', nullable: false},
+        updated_at: {type: 'dateTime', nullable: true}
     }
 };
 

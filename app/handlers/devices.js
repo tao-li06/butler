@@ -20,7 +20,7 @@ export const save = async (req, res) => {
       .then((device) => es.json({ error: false, data: { id: device.get('id')}}))
       .catch((err) => res.status(500).json({error: true, data: {message: err.message}}))
   }
-};
+}
 
 export const list = async (req, res) => {
   Devices.forge()

@@ -3,6 +3,7 @@ import knex from './db'
 import * as _ from 'lodash'
 import sequence from 'when/sequence'
 import schema from './schema'
+import { User, md5Passowrd } from '../db/models'
 
 const createTable = (tableName) => {
     return knex.schema.createTable(tableName, (table) => {
@@ -55,11 +56,17 @@ const createTable = (tableName) => {
   }
 
   
-  createTables()
+createTables()
   .then(function() {
     console.log('Tables created!!');
-    process.exit(0);
+    return User.forge({
+      name: 'root',
+      password: md5Passowrd('password'),
+      is_admin: true
+    })
+    .save()
   })
+  .then(() => process.exit(0))
   .catch(function (error) {
     throw error;
-  });
+  })
