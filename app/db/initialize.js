@@ -58,13 +58,15 @@ const createTable = (tableName) => {
   
 createTables()
   .then(function() {
-    console.log('Tables created!!');
     return User.forge({
       name: 'root',
       password: md5Passowrd('password'),
       is_admin: true
     })
     .save()
+    .then(() => {
+      console.log('Initialized!!');
+    })
   })
   .then(() => process.exit(0))
   .catch(function (error) {
