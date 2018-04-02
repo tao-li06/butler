@@ -1,5 +1,4 @@
 import handle from './handlers'
-import command from './handlers/command'
 
 const express = require('express')
 const next = require('next')
@@ -14,10 +13,6 @@ app.prepare().then(() => {
   server.use(bodyParser.json()); 
 
   handle(server)
-
-  server.get('/api/:device/:command', (req, res) => {
-    command(req, res)
-  })
   
   server.get('*', (req, res) => {
     handleNext(req, res)
