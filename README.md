@@ -16,11 +16,20 @@ db:
     database : {DB_NAME}
     charset  : utf8
 ```
-#### Init database schema
-Run following command to initialize the data schema and default admin user will be set to `root` / `password`
+#### Build
 ```
-npm run init
+npm run build
 ```
+
+#### Start Service
+The service will be up on 3000 after started, and at first time it will initialize the db scehma too.
+```
+npm run start
+```
+
+
+#### Run in on docker
+You can use `build.sh` to build the docker image, then run `start.sh` to run it in a docker container.
 
 ## API
 NOTE: all the calls excpet `/api/login` requires auth token.
