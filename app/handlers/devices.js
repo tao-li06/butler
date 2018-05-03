@@ -17,7 +17,7 @@ export const save = async (req, res) => {
       token: req.body.token
     })
       .save()
-      .then((device) => es.json({ error: false, data: { id: device.get('id')}}))
+      .then((device) => res.json({ error: false, data: { id: device.get('id')}}))
       .catch((err) => res.status(500).json({error: true, data: {message: err.message}}))
   }
 }
