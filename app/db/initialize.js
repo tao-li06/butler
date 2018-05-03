@@ -4,71 +4,41 @@ import * as _ from 'lodash'
 import sequence from 'when/sequence'
 import schema from './schema'
 import { User, md5Passowrd } from '../db/models'
+import schemaInstaller from 'knex-schema-builder'
+import path from 'path'
 
-const createTable = (tableName) => {
-    return knex.schema.createTable(tableName, (table) => {
-      var column;
-      var columnKeys = _.keys(schema[tableName]);
-      _.each(columnKeys, (key) => {
-        if (schema[tableName][key].type === 'text' && schema[tableName][key].hasOwnProperty('fieldtype')) {
-          column = table[schema[tableName][key].type](key, schema[tableName][key].fieldtype);
-        }
-        else if (schema[tableName][key].type === 'string' && schema[tableName][key].hasOwnProperty('maxlength')) {
-          column = table[schema[tableName][key].type](key, schema[tableName][key].maxlength);
-        }
-        else {
-          column = table[schema[tableName][key].type](key);
-        }
-        if (schema[tableName][key].hasOwnProperty('nullable') && schema[tableName][key].nullable === true) {
-          column.nullable();
-        }
-        else {
-          column.notNullable();
-        }
-        if (schema[tableName][key].hasOwnProperty('primary') && schema[tableName][key].primary === true) {
-          column.primary();
-        }
-        if (schema[tableName][key].hasOwnProperty('unique') && schema[tableName][key].unique) {
-          column.unique();
-        }
-        if (schema[tableName][key].hasOwnProperty('unsigned') && schema[tableName][key].unsigned) {
-          column.unsigned();
-        }
-        if (schema[tableName][key].hasOwnProperty('references')) {
-          column.references(schema[tableName][key].references);
-        }
-        if (schema[tableName][key].hasOwnProperty('defaultTo')) {
-          column.defaultTo(schema[tableName][key].defaultTo);
-        }
-      });
-    });
-  }
+const schemaPath = path.join(__dirname, './schema')
 
- const createTables = () => {
-    var tables = [];
-    var tableNames = _.keys(schema);
-    tables = _.map(tableNames, function (tableName) {
-      return function () {
-        return createTable(tableName);
-      };
-    });
-    return sequence(tables);
-  }
+const init = () => {
+  return new Promise((resolve, reject) => {
+    schemaInstaller.isInstallNeeded(knex, schemaPath, (err, required) => {
+      if (err) {
+        console.log(`Fail to check existing db schema version, error : ${err}`)
+        reject(err)
+      } else {
+        if (!required) {
+          resolve()
+        } else {
+          schemaInstaller.install(knex, schemaPath, (error) => {
+            if (error) {
+              console.log(`Fail to install schema, error: ${error}`)
+              reject(error)
+            } else {
+              User.forge({
+                name: 'root',
+                password: md5Passowrd('password'),
+                is_admin: true
+              })
+              .save()
+              .then(resolve)
+              .catch(reject)
+            }
+          })
+        }
+      }
+    })
+  })
+}
 
   
-createTables()
-  .then(function() {
-    return User.forge({
-      name: 'root',
-      password: md5Passowrd('password'),
-      is_admin: true
-    })
-    .save()
-    .then(() => {
-      console.log('Initialized!!');
-    })
-  })
-  .then(() => process.exit(0))
-  .catch(function (error) {
-    throw error;
-  })
+export default init

@@ -1,0 +1,92 @@
+{
+    "schema": {
+        "users": {
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "increments", 
+                    "nullable": false, 
+                    "primary": true
+                },
+                {
+                    "name": "name",
+                    "type": "string", 
+                    "maxlength": 150, 
+                    "nullable": false,
+                    "unique": true
+                },
+                {
+                    "name": "password",
+                    "type": "string"
+                },
+                {
+                    "name": "is_admin",
+                    "type": "bool"
+                }
+            ]
+        },
+        "devices": {
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "increments", 
+                    "nullable": false, 
+                    "primary": true
+                },
+                {
+                    "name": "name",
+                    "type": "string",
+                    "unique": true
+                },
+                {
+                    "name": "type",
+                    "type": "string",
+                    "nullable": false
+                },
+                {
+                    "name": "ip",
+                    "type": "string",
+                    "maxlength": 100,
+                    "nullable": false
+                },
+                {
+                    "name": "token",
+                    "type": "string",
+                    "maxlength": 256
+                }
+            ]
+        },
+        "auth_tokens": {
+            "columns":[
+                {
+                    "name": "id",
+                    "type": "increments", 
+                    "nullable": false, 
+                    "primary": true
+                },
+                {
+                    "name": "user_id",
+                    "type": "integer",
+                    "unique": true
+                },
+                {
+                    "name": "auth_token",
+                    "type": "string"
+                },
+                {
+                    "name": "expire_at",
+                    "type": "dateTime", 
+                    "nullable": false
+                }
+            ],
+            "index": [
+                {
+                    "name": "token",
+                    "columns": ["auth_token"],
+                    "unique": true
+                }
+            ],
+            "timestamps": true
+        }
+    }
+}

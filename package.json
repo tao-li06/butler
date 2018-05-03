@@ -5,9 +5,8 @@
   "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app/index.js --exec babel-node --presets es2015,stage-2",
-    "build": "babel app -d dist",
-    "init": "nodemon app/db/initialize.js --exec babel-node --presets es2015,stage-2"
+    "build": "babel app -d dist && next build && copyfiles -u 1 './app/**/*.!(js)' ./dist",
+    "start": "node ./dist/index.js"
   },
   "repository": {
     "type": "git",
@@ -25,12 +24,14 @@
   "homepage": "https://github.com/tao-li06/butler#readme",
   "dependencies": {
     "actions-on-google": "^1.10.0",
+    "babel-runtime": "^6.26.0",
     "body-parser": "^1.18.2",
     "bookshelf": "^0.13.3",
     "crypto": "^1.0.1",
     "express": "^4.16.3",
     "js-yaml": "^3.11.0",
     "knex": "^0.14.4",
+    "knex-schema-builder": "^0.3.6",
     "lodash": "^4.17.5",
     "miio": "^0.15.6",
     "mysql": "^2.15.0",
@@ -42,9 +43,14 @@
   },
   "devDependencies": {
     "babel-cli": "^6.11.4",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "babel-preset-stage-2": "^6.11.0",
     "babel-register": "^6.11.6",
+    "copyfiles": "^2.0.0",
     "nodemon": "^1.17.2"
   }
 }

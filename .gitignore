@@ -4,3 +4,4 @@ config.yml
 package-lock.json
 firebase
 google-actions
+/dist
