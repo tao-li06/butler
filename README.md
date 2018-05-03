@@ -27,7 +27,6 @@ The service will be up on 3000 after started, and at first time it will initiali
 npm run start
 ```
 
-
 #### Run in on docker
 You can use `build.sh` to build the docker image, then run `start.sh` to run it in a docker container.
 
